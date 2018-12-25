@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import java.util.Arrays;
+
 @SpringBootApplication
 @EnableTransactionManagement(proxyTargetClass = true)
 public class SpringBootJdbcTransactionManagementApplication {
@@ -26,6 +28,13 @@ public class SpringBootJdbcTransactionManagementApplication {
 			bankService.transferFund(fromAccount, toAccount, 1000.00);
 		} catch (InsufficientAccountBalanceException e) {
 			e.printStackTrace();
+		}
+		System.out.println("All Spring beans loaded by Spring Boot::::::::::::::::::::::::::::::::::::");
+		String[] beanDefinitionNames = ctx.getBeanDefinitionNames();
+		Arrays.sort(beanDefinitionNames);
+
+		for (String beanName : beanDefinitionNames){
+			System.out.println(beanName);
 		}
 		ctx.close();
 	}
